@@ -5,7 +5,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-labelsFile = "labels.json"
+labelsFile = "framer.json"
 stringsFile = "strings.json"
 folder = "images"
 
@@ -67,13 +67,3 @@ def label(img, title1, title2):
 	cmd("rm " + img.replace("_framed", "_"))
 
 __main__()
-
-
-
-
-
-#convert 1.png -resize %74.4 1_.png
-
-#convert background.png 1_.png -geometry +243+583 -composite 1_framed.png
- 
-#convert 1_framed.png -font font.ttf -gravity North -fill white -pointsize 100 -draw "text 0,100 'Popüler haber sitelerini'"  -draw "text 0,220 'takip edin'" 1_framed_labeled.png
