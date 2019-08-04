@@ -2,10 +2,7 @@
 Add frames and titles to your Google Play screenshots. 
 
 
-### From
-![2](https://user-images.githubusercontent.com/1595227/62410434-f099d200-b5ed-11e9-8cbb-e7be21d50266.png)
-### To
-![2_out](https://user-images.githubusercontent.com/1595227/62410433-f099d200-b5ed-11e9-8955-06c841757fe6.png)
+![framer](https://user-images.githubusercontent.com/1595227/62423493-ac7bff80-b6c9-11e9-83ff-dc921afc3c47.png)
 
 ## Prerequsities
 * [ImageMagick](https://imagemagick.org/)
