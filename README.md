@@ -1,10 +1,11 @@
 # android-framer (Still being developed)
-Add frames and titles to your Google Play screenshots. 
+Add frames and titles to your Google Play screenshots. Inspired by [fastlane frameit](https://docs.fastlane.tools/actions/frameit/)
 
 
 ![framer](https://user-images.githubusercontent.com/1595227/62423493-ac7bff80-b6c9-11e9-83ff-dc921afc3c47.png)
 
 ## Prerequsities
+* Python 2.7
 * [ImageMagick](https://imagemagick.org/)
 
 ## Usage
@@ -12,7 +13,11 @@ Add frames and titles to your Google Play screenshots.
 
 * background: Background frame
 * font: Title font
-* data: title keys ("1" for 1.png)
+* fontsize: Title font size
+* resize: Resize ratio of the source image
+* xposition: X position of source image to background image
+* yposition: Y position of source image to background image 
+* data: Title keys ("1" for 1.png) Currently supports 1 or 2 lines
 ```json
 {
   "background": "background.png",
@@ -25,7 +30,11 @@ Add frames and titles to your Google Play screenshots.
       "title2_1"
     ]
   },
-  "font": "font.ttf"
+  "font": "font.ttf",
+  "fontsize":"108",
+  "xposition":156,
+  "yposition":780,
+  "resize":100
 }
 ```
 ### Edit strings.json file
