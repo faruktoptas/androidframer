@@ -11,7 +11,7 @@ Add frames and titles to your Google Play screenshots. Inspired by [fastlane fra
 ## Usage
 ### Edit framer.json file
 
-* background: Background frame
+* background: Background frame. More frames can be found on [Facebook Design](https://facebook.design/devices).
 * font: Title font
 * fontsize: Title font size
 * resize: Resize ratio of the source image
