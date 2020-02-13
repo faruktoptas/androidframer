@@ -1,4 +1,4 @@
-# android-framer (Still being developed)
+# android-framer
 Add frames and titles to your Google Play screenshots. Inspired by [fastlane frameit](https://docs.fastlane.tools/actions/frameit/)
 
 
