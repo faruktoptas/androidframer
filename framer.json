@@ -9,5 +9,9 @@
       "title2_1"
     ]
   },
-  "font": "font.ttf"
+  "font": "font.ttf",
+  "fontsize":"108",
+  "xposition":156,
+  "yposition":780,
+  "resize":100
 }
