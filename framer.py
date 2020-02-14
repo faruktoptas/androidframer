@@ -1,15 +1,13 @@
-# coding=utf-8
-
-import json,os
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#!/usr/local/bin/python
+# coding: utf-8
+import os
+import json
 
 class Framer:
 	configFile = "framer.json"
 	stringsFile = "strings.json"
 	folder = "images"
-	
+
 	def __init__(self):
 		self.config = json.loads(open(self.configFile).read())
 		self.titles = json.loads(open(self.stringsFile).read())
@@ -26,29 +24,31 @@ class Framer:
 		files = os.listdir(folder)
 		langFolders = []
 		for f in files:
-			if(os.path.isdir(folder + "/" + f)):
+			if(os.path.isdir(f"{folder}/{f}")):
 				langFolders.append(f)
 
 		for lang in langFolders:
-			for f in os.listdir(folder + "/" + lang ):
-				imgFolder = folder + "/" + lang + "/"
+			for f in os.listdir(f"{folder}/{lang}"):
+				imgFolder = f"{folder}/{lang}/"
 				img = imgFolder + f
 				file = f[:f.rfind(".")]
 				ext = f[f.rfind("."):]
-				if (len(file) > 0 and unicode(file).isnumeric()):
+				if (len(file) > 0 and file.isnumeric()):
 					resized = self.resize(imgFolder, file, ext)
 					framed = self.frame(imgFolder, resized, ext)
-					if (self.data.has_key(file)):
+					if (file in self.data.keys()):
 						titleKeys = self.data[file]
 						title1 = ""
 						title2 = ""
-						if (self.titles.has_key(lang)):
-							if (len(titleKeys) > 0 and self.titles[lang].has_key(titleKeys[0])):
+						if (lang in self.titles.keys()):
+							if (len(titleKeys) > 0
+							and titleKeys[0] in self.titles[lang].keys()):
 								title1 = self.titles[lang][titleKeys[0]]
-							if (len(titleKeys) > 1 and self.titles[lang].has_key(titleKeys[1])):
+							if (len(titleKeys) > 1
+							and titleKeys[1] in self.titles[lang].keys()):
 								title2 = self.titles[lang][titleKeys[1]]
 							self.label(framed, title1, title2)
-	
+
 
 
 	def cmd(self, command):
@@ -57,20 +57,23 @@ class Framer:
 	def resize(self, imgFolder, file, ext):
 		img = imgFolder + file  + ext
 		out = imgFolder + file + '_' + ext
-		self.cmd('convert ' + img + ' -resize %' + str(self.resizeRatio) + ' ' + out)
+		command = f"convert {img} -resize %{str(self.resizeRatio)} {out}"
+		self.cmd(command)
 		return file + "_"
 
 	def frame(self, imgFolder, file, ext):
 		img = imgFolder + file + ext
 		out = imgFolder + file + 'framed' + ext
-		self.cmd('convert ' + self.bg +' ' + img +' -geometry +' + self.xPos + '+' + self.yPos +' -composite ' + out)
+		command = f"convert {self.bg} {img} -geometry +{self.xPos}+{self.yPos} -composite {out}"
+		self.cmd(command)
 		return out
 
 	def label(self, img, title1, title2):
 		out = img.replace('_framed', '_out')
-		command = "convert " + img +" -font " + self.font + " -gravity North -fill white -pointsize " + self.fontSize + " -draw \"text 0,100 '" + title1 +"'\"  -draw \"text 0,220 '" + title2 + "'\" " + out
+		command = f"convert {img} -font {self.font} -gravity North -fill white -pointsize {self.fontSize} -draw \"text 0,100 '{title1}'\" -draw \"text 0,220 '{title2}'\" {out}"
 		self.cmd(command)
-		self.cmd("rm " + img)
-		self.cmd("rm " + img.replace("_framed", "_"))
+		self.cmd(f"rm {img}")
+		self.cmd(f"rm {img.replace('_framed', '_')}")
 
-Framer().start()
+if __name__== '__main__':
+	Framer().start()

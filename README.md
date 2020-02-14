@@ -5,7 +5,7 @@ Add frames and titles to your Google Play screenshots. Inspired by [fastlane fra
 ![framer](https://user-images.githubusercontent.com/1595227/62423493-ac7bff80-b6c9-11e9-83ff-dc921afc3c47.png)
 
 ## Prerequsities
-* Python 2.7 - PR's welcome for Python 3.x :)
+* Python 3.6
 * [ImageMagick](https://imagemagick.org/)
 
 ## Usage
