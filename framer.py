@@ -18,10 +18,15 @@ class Framer:
 		self.fontSize = self.config["fontsize"]
 		self.xPos = str(self.config["xposition"])
 		self.yPos = str(self.config["yposition"])
+		self.folder = self.config["output"]
 
 	def start(self):
 		folder = self.folder
-		files = os.listdir(folder)
+		try:
+		    files = os.listdir(folder)
+		except FileNotFoundError:
+		    print(f"Directory \"{folder}\" not found.")
+		    quit()
 		langFolders = []
 		for f in files:
 			if(os.path.isdir(f"{folder}/{f}")):
