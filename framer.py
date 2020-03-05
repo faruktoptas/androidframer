@@ -2,6 +2,7 @@
 # coding: utf-8
 import os
 import json
+from pathlib import Path # for easier multiplatform file pathing
 
 class Framer:
 	configFile = "framer.json"
@@ -28,9 +29,10 @@ class Framer:
 				langFolders.append(f)
 
 		for lang in langFolders:
+			imgFolder = Path(f"{folder}/{lang}/") # support multiple os file paths, moved outside of nested for loop
 			for f in os.listdir(f"{folder}/{lang}"):
-				imgFolder = f"{folder}/{lang}/"
-				img = imgFolder + f
+								
+				img = imgFolder / f
 				file = f[:f.rfind(".")]
 				ext = f[f.rfind("."):]
 				if (len(file) > 0 and file.isnumeric()):
@@ -55,25 +57,28 @@ class Framer:
 		return os.popen(command).read()
 
 	def resize(self, imgFolder, file, ext):
-		img = imgFolder + file  + ext
-		out = imgFolder + file + '_' + ext
+		img = imgFolder / (file + ext)
+		out = imgFolder / (file + '_' + ext)
 		command = f"convert {img} -resize %{str(self.resizeRatio)} {out}"
+		#command = f"magick {img} -resize {str(self.resizeRatio)}% {out}" # 'convert' is a legacy util, replaced in ImageMagick 7 with 'magick'
 		self.cmd(command)
 		return file + "_"
 
 	def frame(self, imgFolder, file, ext):
-		img = imgFolder + file + ext
-		out = imgFolder + file + 'framed' + ext
+		img = imgFolder / (file + ext)
+		out = imgFolder / (file + 'framed' + ext)
 		command = f"convert {self.bg} {img} -geometry +{self.xPos}+{self.yPos} -composite {out}"
+		#command = f"magick {self.bg} {img} -geometry +{self.xPos}+{self.yPos} -composite {out}"
 		self.cmd(command)
 		return out
 
 	def label(self, img, title1, title2):
-		out = img.replace('_framed', '_out')
+		out = Path(str(img).replace('_framed', '_out'))
 		command = f"convert {img} -font {self.font} -gravity North -fill white -pointsize {self.fontSize} -draw \"text 0,100 '{title1}'\" -draw \"text 0,220 '{title2}'\" {out}"
+		#command = f"magick {img} -font {self.font} -gravity North -fill white -pointsize {self.fontSize} -draw \"text 0,100 '{title1}'\" -draw \"text 0,220 '{title2}'\" {out}"
 		self.cmd(command)
-		self.cmd(f"rm {img}")
-		self.cmd(f"rm {img.replace('_framed', '_')}")
+		os.remove(img)
+		os.remove(Path(str(img).replace('_framed', '_')))
 
 if __name__== '__main__':
 	Framer().start()
