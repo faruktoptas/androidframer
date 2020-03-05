@@ -72,8 +72,8 @@ class Framer:
 		out = img.replace('_framed', '_out')
 		command = f"convert {img} -font {self.font} -gravity North -fill white -pointsize {self.fontSize} -draw \"text 0,100 '{title1}'\" -draw \"text 0,220 '{title2}'\" {out}"
 		self.cmd(command)
-		self.cmd(f"rm {img}")
-		self.cmd(f"rm {img.replace('_framed', '_')}")
+		os.remove(img)
+		os.remove(img.replace('_framed', '_'))
 
 if __name__== '__main__':
 	Framer().start()
