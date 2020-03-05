@@ -29,13 +29,13 @@ class Framer:
 		    quit()
 		langFolders = []
 		for f in files:
-			if(os.path.isdir(f"{folder}/{f}")):
+			if os.path.isdir(os.path.join(folder, f)):
 				langFolders.append(f)
 
 		for lang in langFolders:
-			for f in os.listdir(f"{folder}/{lang}"):
-				imgFolder = f"{folder}/{lang}/"
-				img = imgFolder + f
+			for f in os.listdir(os.path.join(folder, lang)):
+				imgFolder = os.path.join(folder, lang)
+				img = os.path.join(imgFolder, f)
 				file = f[:f.rfind(".")]
 				ext = f[f.rfind("."):]
 				if (len(file) > 0 and file.isnumeric()):
@@ -60,15 +60,15 @@ class Framer:
 		return os.popen(command).read()
 
 	def resize(self, imgFolder, file, ext):
-		img = imgFolder + file  + ext
-		out = imgFolder + file + '_' + ext
+		img = os.path.join(imgFolder, (file + ext))
+		out = os.path.join(imgFolder, (file + '_' + ext))
 		command = f"convert {img} -resize %{str(self.resizeRatio)} {out}"
 		self.cmd(command)
 		return file + "_"
 
 	def frame(self, imgFolder, file, ext):
-		img = imgFolder + file + ext
-		out = imgFolder + file + 'framed' + ext
+		img = os.path.join(imgFolder, (file + ext))
+		out = os.path.join(imgFolder, (file + 'framed' + ext))
 		command = f"convert {self.bg} {img} -geometry +{self.xPos}+{self.yPos} -composite {out}"
 		self.cmd(command)
 		return out
