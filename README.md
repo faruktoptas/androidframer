@@ -18,6 +18,7 @@ Add frames and titles to your Google Play screenshots. Inspired by [fastlane fra
 * xposition: X position of source image to background image
 * yposition: Y position of source image to background image 
 * data: Title keys ("1" for 1.png) Currently supports 1 or 2 lines
+* images: Directory to place output files
 ```json
 {
   "background": "background.png",
@@ -34,7 +35,8 @@ Add frames and titles to your Google Play screenshots. Inspired by [fastlane fra
   "fontsize":"108",
   "xposition":156,
   "yposition":780,
-  "resize":100
+  "resize":100,
+  "images": "output"
 }
 ```
 ### Edit strings.json file
@@ -57,16 +59,23 @@ For each language set strings for title keys specified in framer.json
 ## Folder Structure
 ```
 .
-+-- framer.json
-+-- strings.json
-+-- font.ttf
-+-- images
-|   +-- en-US
-|       +-- 1.png
-|       +-- 2.png
-|   +-- tr-TR
-|       +-- 1.png
-|       +-- 2.png
+├── font.ttf
+├── framer.json
+├── strings.json
+├── images
+│   ├── en-US
+│   │   ├── 1.png
+│   │   └── 2.png
+│   └── tr-TR
+│       ├── 1.png
+│       └── 2.png
+└── output
+    ├── en-US
+    │   ├── 1_out.png
+    │   └── 2_out.png
+    └── tr-TR
+        ├── 1_out.png
+        └── 2_out.png
 ```
 
 ## Running
