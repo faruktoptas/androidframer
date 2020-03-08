@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python3
 # coding: utf-8
 import os
 import json
@@ -18,23 +18,30 @@ class Framer:
 		self.fontSize = self.config["fontsize"]
 		self.xPos = str(self.config["xposition"])
 		self.yPos = str(self.config["yposition"])
-		self.folder = self.config["output"]
+		self.output = self.config["images"]
 
 	def start(self):
 		folder = self.folder
+		output = self.output
 		try:
-		    files = os.listdir(folder)
+		    os.listdir(output)
 		except FileNotFoundError:
-		    print(f"Directory \"{folder}\" not found.")
-		    quit()
+		    os.mkdir(output)
+		    print(f"\"{output}\" not found, so has been created.")
+		files = os.listdir(folder)
 		langFolders = []
 		for f in files:
 			if os.path.isdir(os.path.join(folder, f)):
 				langFolders.append(f)
 
 		for lang in langFolders:
+			outFolder = os.path.join(output, lang)
+			imgFolder = os.path.join(folder, lang)
+			try:
+			    os.listdir(outFolder)
+			except FileNotFoundError:
+			    os.mkdir(outFolder)
 			for f in os.listdir(os.path.join(folder, lang)):
-				imgFolder = os.path.join(folder, lang)
 				img = os.path.join(imgFolder, f)
 				file = f[:f.rfind(".")]
 				ext = f[f.rfind("."):]
@@ -52,7 +59,9 @@ class Framer:
 							if (len(titleKeys) > 1
 							and titleKeys[1] in self.titles[lang].keys()):
 								title2 = self.titles[lang][titleKeys[1]]
-							self.label(framed, title1, title2)
+							tempOut = self.label(framed, title1, title2)
+							out = tempOut.replace(imgFolder, outFolder)
+							os.rename(tempOut, out)
 
 
 
@@ -79,6 +88,7 @@ class Framer:
 		self.cmd(command)
 		os.remove(img)
 		os.remove(img.replace('_framed', '_'))
+		return out
 
 if __name__== '__main__':
 	Framer().start()
