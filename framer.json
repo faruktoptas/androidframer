@@ -13,5 +13,6 @@
   "fontsize":"108",
   "xposition":156,
   "yposition":780,
-  "resize":100
+  "resize":100,
+  "images": "output"
 }
