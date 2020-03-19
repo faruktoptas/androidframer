@@ -79,4 +79,4 @@ For each language set strings for title keys specified in framer.json
 ```
 
 ## Running
-`python framer.py`
+`python3 framer.py`
