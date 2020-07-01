@@ -14,5 +14,5 @@
   "xposition":156,
   "yposition":780,
   "resize":100,
-  "images": "output"
+  "output": "output"
 }

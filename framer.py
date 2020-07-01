@@ -18,7 +18,7 @@ class Framer:
 		self.fontSize = self.config["fontsize"]
 		self.xPos = str(self.config["xposition"])
 		self.yPos = str(self.config["yposition"])
-		self.output = self.config["images"]
+		self.output = self.config["output"]
 
 	def start(self):
 		folder = self.folder
