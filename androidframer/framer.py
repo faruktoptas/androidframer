@@ -2,15 +2,24 @@
 # coding: utf-8
 import os
 import json
+import logging
+import time
 
 class Framer:
-	configFile = "framer.json"
-	stringsFile = "strings.json"
-	folder = "images"
+	#Logging functionality
+	if not os.path.isdir("./logs"):
+		os.mkdir("./logs")
+	logging.basicConfig(filename="./logs/log.txt",level=logging.INFO)
 
-	def __init__(self):
+	def __init__(self, config, strings, images):
+		#Supplies folders and files
+		self.configFile = config
+		self.stringsFile = strings
+		self.folder = images
+		#Read
 		self.config = json.loads(open(self.configFile).read())
 		self.titles = json.loads(open(self.stringsFile).read())
+		#Config file
 		self.bg = self.config["background"]
 		self.font = self.config["font"]
 		self.data = self.config["data"]
@@ -21,13 +30,17 @@ class Framer:
 		self.output = self.config["output"]
 
 	def start(self):
+		'''Runs main Framer program'''
+		#Logging
+		start_time = time.time()
+		logging.info("Starting androidframer at {0}".format(time.asctime()))
 		folder = self.folder
 		output = self.output
 		try:
 		    os.listdir(output)
 		except FileNotFoundError:
 		    os.mkdir(output)
-		    print(f"\"{output}\" not found, so has been created.")
+		    logging.warning("{0} not found, so has been created.".format(output))
 		files = os.listdir(folder)
 		langFolders = []
 		for f in files:
@@ -40,7 +53,8 @@ class Framer:
 			try:
 			    os.listdir(outFolder)
 			except FileNotFoundError:
-			    os.mkdir(outFolder)
+				os.mkdir(outFolder)
+				logging.debug("Created folder {0}".format(outFolder))
 			for f in os.listdir(os.path.join(folder, lang)):
 				img = os.path.join(imgFolder, f)
 				file = f[:f.rfind(".")]
@@ -62,13 +76,32 @@ class Framer:
 							tempOut = self.label(framed, title1, title2)
 							out = tempOut.replace(imgFolder, outFolder)
 							os.rename(tempOut, out)
-
-
+		logging.info("Finished running in {}s".format(round(time.time()-start_time,2)))
 
 	def cmd(self, command):
+		'''Opens pipe and reads command from system'''
 		return os.popen(command).read()
 
 	def resize(self, imgFolder, file, ext):
+		"""
+		Resize image.
+
+		Takes file in imgFolder and resizes it.
+
+		Parameters
+		----------
+		imgFolder : string
+			Address of folder with image
+		file : string
+			Name of image file
+		ext : string
+			Extension of image file
+
+		Returns
+		-------
+		string
+			file with an appended underscore
+		"""
 		img = os.path.join(imgFolder, (file + ext))
 		out = os.path.join(imgFolder, (file + '_' + ext))
 		command = f"convert {img} -resize %{str(self.resizeRatio)} {out}"
@@ -76,6 +109,7 @@ class Framer:
 		return file + "_"
 
 	def frame(self, imgFolder, file, ext):
+		'''Put the file.ext in a frame'''
 		img = os.path.join(imgFolder, (file + ext))
 		out = os.path.join(imgFolder, (file + 'framed' + ext))
 		command = f"convert {self.bg} {img} -geometry +{self.xPos}+{self.yPos} -composite {out}"
@@ -83,12 +117,10 @@ class Framer:
 		return out
 
 	def label(self, img, title1, title2):
+		'''Label img with title1 and title2'''
 		out = img.replace('_framed', '_out')
 		command = f"convert {img} -font {self.font} -gravity North -fill white -pointsize {self.fontSize} -draw \"text 0,100 '{title1}'\" -draw \"text 0,220 '{title2}'\" {out}"
 		self.cmd(command)
 		os.remove(img)
 		os.remove(img.replace('_framed', '_'))
 		return out
-
-if __name__== '__main__':
-	Framer().start()
