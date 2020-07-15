@@ -2,7 +2,7 @@
 Add frames and titles to your Google Play screenshots. Inspired by [fastlane frameit](https://docs.fastlane.tools/actions/frameit/)
 
 
-![framer](https://user-images.githubusercontent.com/1595227/62423493-ac7bff80-b6c9-11e9-83ff-dc921afc3c47.png)
+![framer](https://user-images.githubusercontent.com/1595227/87590805-141b3700-c6f0-11ea-945d-dc0ea79167a1.jpg)
 
 ## Prerequsities
 * Python 3.6
