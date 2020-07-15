@@ -18,7 +18,7 @@ Framer("resources/framer.json", "resources/strings.json", "resources/images").st
 ```
 or clone this repo and then run the script below:
 
-`python3 framer.py`
+`python3 sample.py`
 
 ## Configure
 ### Edit framer.json file
