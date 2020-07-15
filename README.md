@@ -8,7 +8,19 @@ Add frames and titles to your Google Play screenshots. Inspired by [fastlane fra
 * Python 3.6
 * [ImageMagick](https://imagemagick.org/)
 
-## Usage
+## Install
+```pip3 install androidframer==0.1```
+
+```python
+from androidframer import Framer
+
+Framer("resources/framer.json", "resources/strings.json", "resources/images").start()
+```
+or clone this repo and then run the script below:
+
+`python3 framer.py`
+
+## Configure
 ### Edit framer.json file
 
 * background: Background frame. More frames can be found on [Facebook Design](https://facebook.design/devices).
@@ -21,7 +33,7 @@ Add frames and titles to your Google Play screenshots. Inspired by [fastlane fra
 * output: Directory to place output files
 ```json
 {
-  "background": "background.png",
+  "background": "resources/background.png",
   "data": {
     "1": [
       "title1_1",
@@ -31,12 +43,12 @@ Add frames and titles to your Google Play screenshots. Inspired by [fastlane fra
       "title2_1"
     ]
   },
-  "font": "font.ttf",
+  "font": "resources/font.ttf",
   "fontsize":"108",
   "xposition":156,
   "yposition":780,
   "resize":100,
-  "output": "output"
+  "output": "resources/output"
 }
 ```
 ### Edit strings.json file
@@ -55,28 +67,3 @@ For each language set strings for title keys specified in framer.json
   }
 }
 ```
-
-## Folder Structure
-```
-.
-├── font.ttf
-├── framer.json
-├── strings.json
-├── images
-│   ├── en-US
-│   │   ├── 1.png
-│   │   └── 2.png
-│   └── tr-TR
-│       ├── 1.png
-│       └── 2.png
-└── output
-    ├── en-US
-    │   ├── 1_out.png
-    │   └── 2_out.png
-    └── tr-TR
-        ├── 1_out.png
-        └── 2_out.png
-```
-
-## Running
-`python3 framer.py`
