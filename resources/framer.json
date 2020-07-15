@@ -1,5 +1,5 @@
 {
-  "background": "background.png",
+  "background": "resources/background.png",
   "data": {
     "1": [
       "title1_1",
@@ -9,10 +9,10 @@
       "title2_1"
     ]
   },
-  "font": "font.ttf",
+  "font": "resources/font.ttf",
   "fontsize":"108",
   "xposition":156,
   "yposition":780,
   "resize":100,
-  "output": "output"
+  "output": "resources/output"
 }
