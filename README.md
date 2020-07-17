@@ -1,4 +1,5 @@
-# android-framer
+# android-framer ![Python Build Action](https://github.com/faruktoptas/androidframer/workflows/Python%20Build/badge.svg)
+
 Add frames and titles to your Google Play screenshots. Inspired by [fastlane frameit](https://docs.fastlane.tools/actions/frameit/)
 
 
