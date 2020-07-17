@@ -1,6 +1,6 @@
 # This workflow will install Python imagemagick, run sample.py 
 
-name: Python package
+name: Python Build
 
 on:
   push:
