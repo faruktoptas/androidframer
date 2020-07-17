@@ -1,0 +1,33 @@
+# This workflow will install Python imagemagick, run sample.py 
+
+name: Python package
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+    - name: Install imagemagick
+      run: |
+        git clone https://github.com/ImageMagick/ImageMagick.git ImageMagick-7.0.10
+        cd ImageMagick-7.0.10
+        ./configure --prefix=${HOME}/opt
+        make
+        sudo make install
+        
+    - name: run sample
+      run: |
+        python3 sample.py
+    
