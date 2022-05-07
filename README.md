@@ -68,3 +68,9 @@ For each language set strings for title keys specified in framer.json
   }
 }
 ```
+### ImageMagick commands
+```bash
+magick input.png -resize 50% out.png
+magick composite -compose atop -geometry +x+y 1.png 2.png out.png
+magick input.png -gravity North -font font.ttf -fill white -pointsize 150 -draw 'text 0,100 "some text"' out.png
+```
