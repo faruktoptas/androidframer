@@ -21,8 +21,8 @@ jobs:
         python-version: 3.6
     - name: Install imagemagick
       run: |
-        git clone https://github.com/ImageMagick/ImageMagick.git ImageMagick-7.0.10
-        cd ImageMagick-7.0.10
+        git clone https://github.com/ImageMagick/ImageMagick.git ImageMagick-7.1.0-32
+        cd ImageMagick-7.1.0-32
         ./configure --prefix=${HOME}/opt
         make
         sudo make install
