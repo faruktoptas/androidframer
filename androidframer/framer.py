@@ -18,7 +18,7 @@ class Framer:
 		self.folder = images
 		#Read
 		self.config = json.loads(open(self.configFile).read())
-		self.titles = json.loads(open(self.stringsFile).read())
+		self.titles = json.loads(open(self.stringsFile, encoding='utf-8').read())
 		#Config file
 		self.bg = self.config["background"]
 		self.font = self.config["font"]
@@ -104,7 +104,7 @@ class Framer:
 		"""
 		img = os.path.join(imgFolder, (file + ext))
 		out = os.path.join(imgFolder, (file + '_' + ext))
-		command = f"convert {img} -resize %{str(self.resizeRatio)} {out}"
+		command = f"magick {img} -resize {str(100)}% {out}"
 		self.cmd(command)
 		return file + "_"
 
@@ -112,15 +112,21 @@ class Framer:
 		'''Put the file.ext in a frame'''
 		img = os.path.join(imgFolder, (file + ext))
 		out = os.path.join(imgFolder, (file + 'framed' + ext))
-		command = f"convert {self.bg} {img} -geometry +{self.xPos}+{self.yPos} -composite {out}"
+		command = f"magick composite -compose atop -geometry +{self.xPos}+{self.yPos} {img} {self.bg} {out}"
 		self.cmd(command)
 		return out
 
 	def label(self, img, title1, title2):
 		'''Label img with title1 and title2'''
 		out = img.replace('_framed', '_out')
-		command = f"convert {img} -font {self.font} -gravity North -fill white -pointsize {self.fontSize} -draw \"text 0,100 '{title1}'\" -draw \"text 0,220 '{title2}'\" {out}"
+		command = f"magick {img} -font {self.font} -gravity North -fill white -pointsize {self.fontSize} -draw \"text 0,190 '{title1}'\" -draw \"text 0,220 '{title2}'\" {out}"
 		self.cmd(command)
-		os.remove(img)
-		os.remove(img.replace('_framed', '_'))
+		try:
+			os.remove(img)
+		except:
+			print("")
+		try:
+			os.remove(img.replace('_framed', '_'))
+		except:
+			print("")
 		return out
